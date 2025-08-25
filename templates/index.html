@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LeetCode Problem Solver</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>LeetCode Problem Solver</h1>
+    <form method="POST">
+      <label for="problem">Choose a Problem:</label>
+      <select id="problem" name="problem" required>
+        {% for name in problems.keys() %}
+          <option value="{{ name }}">{{ name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="solution">Your Solution:</label>
+      <textarea id="solution" name="solution" placeholder="Paste your code here..."></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>

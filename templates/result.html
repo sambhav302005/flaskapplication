@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>{{ title }}</h1>
+    <div class="card">
+      <p><strong>Description:</strong> {{ details.description }}</p>
+      <p><strong>Difficulty:</strong> {{ details.difficulty }}</p>
+      <p><strong>Category:</strong> {{ details.category }}</p>
+    </div>
+
+    {% if details.examples %}
+    <div class="card">
+      <h3>Examples</h3>
+      <ul>
+        {% for ex in details.examples %}
+        <li><b>Input:</b> {{ ex.input }} <br>
+            <b>Output:</b> {{ ex.output }} <br>
+            <i>{{ ex.explanation }}</i></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if details.constraints %}
+    <div class="card">
+      <h3>Constraints</h3>
+      <ul>{% for c in details.constraints %}<li>{{ c }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+
+    {% if details.hints %}
+    <div class="card">
+      <h3>Hints</h3>
+      <ul>{% for h in details.hints %}<li>{{ h }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+
+    <h2>Your Solution</h2>
+    <pre class="code-block">{{ solution }}</pre>
+
+    <div class="card">
+      <h3>Analysis</h3>
+      <p><b>Language:</b> {{ analysis.language }}</p>
+      <p><b>Lines of Code:</b> {{ analysis.line_count }}</p>
+      <p><b>Complexity Estimate:</b> {{ analysis.estimated_complexity }}</p>
+      <p><b>Has Comments:</b> {{ "Yes" if analysis.has_comments else "No" }}</p>
+      <ul>
+        {% for s in analysis.suggestions %}
+          <li>{{ s }}</li>
+        {% endfor %}
+      </ul>
+      <p><i>Submitted on {{ timestamp }}</i></p>
+    </div>
+
+    <a href="/" class="back-btn">🔙 Back</a>
+  </div>
+</body>
+</html>
