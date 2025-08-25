@@ -2,25 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>LeetCode Problem Solver</title>
+  <title>LeetCode Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <div class="container">
-    <h1>LeetCode Problem Solver</h1>
-    <form method="POST">
-      <label for="problem">Choose a Problem:</label>
-      <select id="problem" name="problem" required>
-        {% for name in problems.keys() %}
-          <option value="{{ name }}">{{ name }}</option>
-        {% endfor %}
-      </select>
+    <h1>LeetCode Problem Solver Dashboard</h1>
 
-      <label for="solution">Your Solution:</label>
-      <textarea id="solution" name="solution" placeholder="Paste your code here..."></textarea>
+    <!-- Dashboard Cards -->
+    <div class="dashboard">
+      <div class="card dashboard-card">
+        <h3>Total Problems</h3>
+        <p>{{ total_problems }}</p>
+      </div>
+      <div class="card dashboard-card">
+        <h3>Total Submissions</h3>
+        <p>{{ total_submissions }}</p>
+      </div>
+      <div class="card dashboard-card">
+        <h3>Recent Submissions</h3>
+        <ul>
+          {% for sub in recent_submissions %}
+            <li>{{ sub.problem }} - {{ sub.time }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
-      <button type="submit">Submit</button>
-    </form>
+    <!-- Submission Form -->
+    <div class="card">
+      <h2>Submit a Solution</h2>
+      <form method="POST">
+        <label for="problem">Choose a Problem:</label>
+        <select id="problem" name="problem" required>
+          {% for name in problems.keys() %}
+            <option value="{{ name }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+
+        <label for="solution">Your Solution:</label>
+        <textarea id="solution" name="solution" placeholder="Paste your code here..." required></textarea>
+
+        <button type="submit">Submit Solution</button>
+      </form>
+    </div>
+
+    <a href="/problems" class="back-btn">📄 View All Problems</a>
+    <a href="/submissions" class="back-btn">📝 View All Submissions</a>
   </div>
 </body>
 </html>

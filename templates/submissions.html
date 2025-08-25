@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recent Submissions</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #2b7cff;
+      color: white;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #e6f0ff;
+    }
+
+    .container h1 {
+      text-align: center;
+      color: #222;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #444;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    .back-btn:hover {
+      background: #000;
+    }
+
+    .code-block {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+      max-height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Recent Submissions</h1>
+
+    {% if submissions %}
+    <table>
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Language</th>
+          <th>Lines of Code</th>
+          <th>Complexity</th>
+          <th>Has Comments</th>
+          <th>Suggestions</th>
+          <th>Solution</th>
+          <th>Submitted At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sub in submissions %}
+        <tr>
+          <td>{{ sub.problem }}</td>
+          <td>{{ sub.analysis.language }}</td>
+          <td>{{ sub.analysis.line_count }}</td>
+          <td>{{ sub.analysis.estimated_complexity }}</td>
+          <td>{{ "Yes" if sub.analysis.has_comments else "No" }}</td>
+          <td>
+            {% if sub.analysis.suggestions %}
+              <ul>
+                {% for s in sub.analysis.suggestions %}
+                  <li>{{ s }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              None
+            {% endif %}
+          </td>
+          <td><pre class="code-block">{{ sub.solution }}</pre></td>
+          <td>{{ sub.time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No submissions yet. <a href="/" class="back-btn">Submit a Problem</a></p>
+    {% endif %}
+
+    <a href="/" class="back-btn">🔙 Back to Dashboard</a>
+  </div>
+</body>
+</html>
